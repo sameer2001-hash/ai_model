@@ -35,10 +35,8 @@ vision_llm = ChatGroq(
 agent_llm = ChatGroq(model=AGENT_MODEL, temperature=0)
 
 
-# --------------------------------------------------------------------------
-# Image handling
-# --------------------------------------------------------------------------
 
+# Image handling
 def encode_image(image_path: str) -> tuple[str, str]:
     """Validate and encode an image file to base64. Returns (base64_data, mime_type)."""
     if not os.path.exists(image_path):
@@ -65,9 +63,9 @@ def _strip_json_fence(text: str) -> str:
     return re.sub(r"^```(?:json)?\s*|\s*```$", "", text)
 
 
-# --------------------------------------------------------------------------
-# Step 1: extract structured lab values from the image
-# --------------------------------------------------------------------------
+
+# 1: extract structured lab values from the image
+
 
 EXTRACTION_PROMPT = """
 This is a blood work report. Read every test result visible in the image and
@@ -121,9 +119,9 @@ def analyze_blood_work(image_path: str) -> dict:
     return parsed
 
 
-# --------------------------------------------------------------------------
-# Step 2: diet recommendation tool (unchanged logic, used by the agent)
-# --------------------------------------------------------------------------
+
+# 2 diet recommendation tool (unchanged logic, used by the agent)
+
 
 DIET_PLANS = {
     "high_cholesterol": {
@@ -165,9 +163,8 @@ diet_agent = create_agent(
 )
 
 
-# --------------------------------------------------------------------------
-# Full pipeline
-# --------------------------------------------------------------------------
+
+# Func
 
 def run_full_analysis(image_path: str) -> dict:
     """
